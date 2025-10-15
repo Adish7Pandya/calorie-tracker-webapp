@@ -13,9 +13,11 @@ serve(async (req) => {
   try {
     const { currentCalories, goalCalories, recentMeals } = await req.json();
     
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) {
-      throw new Error('LOVABLE_API_KEY is not configured');
+    // Use generic env vars so this function isn't tied to a specific AI provider
+    const AI_API_KEY = Deno.env.get('AI_API_KEY');
+    const AI_GATEWAY_URL = Deno.env.get('AI_GATEWAY_URL') || 'https://ai.gateway.example.com/v1/chat/completions';
+    if (!AI_API_KEY) {
+      throw new Error('AI_API_KEY is not configured');
     }
 
     const remainingCalories = goalCalories - currentCalories;
@@ -36,10 +38,10 @@ Please suggest healthy meal options that would fit well within my remaining calo
 
 Keep suggestions realistic and practical.`;
 
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const response = await fetch(AI_GATEWAY_URL, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+        'Authorization': `Bearer ${AI_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

@@ -1,18 +1,16 @@
-# Welcome to your Lovable project
+# Welcome to your calorie-tracker-webapp project
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/11c7c4ee-26ce-4fcd-985d-8de14033aea2
+**URL**: (removed third-party preview link)
 
 ## How can I edit this code?
 
 There are several ways of editing your application.
 
-**Use Lovable**
+Local development
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/11c7c4ee-26ce-4fcd-985d-8de14033aea2) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
+Work locally using your preferred IDE. The project is a Vite + React + TypeScript frontend with Supabase functions. Changes are committed via Git.
 
 **Use your preferred IDE**
 
@@ -62,12 +60,38 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/11c7c4ee-26ce-4fcd-985d-8de14033aea2) and click on Share -> Publish.
+Follow your usual deployment workflow (Vercel, Netlify, or other static hosts) or deploy the frontend and Supabase functions separately. This repository contains a frontend (Vite + React) and serverless functions under `supabase/functions`.
 
-## Can I connect a custom domain to my Lovable project?
+## Can I connect a custom domain to my deployment?
 
-Yes, you can!
+Yes — configure your hosting provider's domain settings or the platform where you deploy the frontend. If you use a managed backend or preview service, follow that platform's docs for custom domains.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Java backend (local build with Java 21)
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This repository contains a small Spring Boot backend in `java-backend`. The project now targets Java 21 (LTS). To build and run the backend locally you need JDK 21 installed and available to Maven.
+
+Quick install (Linux - Debian/Ubuntu):
+
+```sh
+# Install OpenJDK 21 (Debian/Ubuntu)
+sudo apt update
+sudo apt install -y wget unzip
+wget https://github.com/adoptium/temurin21-binaries/releases/latest/download/OpenJDK21U-jdk_x64_linux_hotspot_21_latest.tar.gz
+sudo tar -xzf OpenJDK21U-jdk_x64_linux_hotspot_21_latest.tar.gz -C /usr/lib/jvm/
+# adjust path if necessary
+sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk-21/bin/java 1
+sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk-21/bin/javac 1
+```
+
+Fedora/CentOS and macOS users should use their package manager or adopt Temurin/Oracle distributions.
+
+If you have multiple JDKs, add or update `java-backend/.mvn/toolchains.xml` so Maven can pick the JDK 21 installation. Example `jdkHome` in that file should point to the JDK 21 install location.
+
+Build the backend:
+
+```sh
+cd java-backend
+mvn -DskipTests package
+```
+
+If the build fails with "release version 21 not supported", ensure your `java -version` reports a Java 21 runtime and that Maven is using JDK 21 (not just a Java 17 runtime).
