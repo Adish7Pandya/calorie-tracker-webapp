@@ -14,7 +14,69 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      meals: {
+        Row: {
+          calories: number
+          carbs: number | null
+          created_at: string
+          fat: number | null
+          food_name: string
+          id: string
+          meal_date: string
+          protein: number | null
+          quantity: number
+          user_id: string
+        }
+        Insert: {
+          calories: number
+          carbs?: number | null
+          created_at?: string
+          fat?: number | null
+          food_name: string
+          id?: string
+          meal_date?: string
+          protein?: number | null
+          quantity?: number
+          user_id: string
+        }
+        Update: {
+          calories?: number
+          carbs?: number | null
+          created_at?: string
+          fat?: number | null
+          food_name?: string
+          id?: string
+          meal_date?: string
+          protein?: number | null
+          quantity?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          daily_calorie_goal: number
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          daily_calorie_goal?: number
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          daily_calorie_goal?: number
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
