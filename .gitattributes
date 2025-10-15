@@ -2,4 +2,4 @@
 *.jsx linguist-language=JavaScript
 *.java linguist-language=Java
 *.ts linguist-language=JavaScript
-*.tsx linguist-language=JavaScript
+*.tsx linguist-language=Java 
