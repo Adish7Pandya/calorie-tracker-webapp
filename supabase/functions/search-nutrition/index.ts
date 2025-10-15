@@ -1,3 +1,4 @@
+/// <reference types="https://deno.land/x/deno_types@0.1.0/index.d.ts" />
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const corsHeaders = {
@@ -20,13 +21,17 @@ serve(async (req) => {
       );
     }
 
+    // Read both App ID and App Key from environment variables so they can be managed in Supabase
     const nutritionixApiKey = Deno.env.get('NUTRITIONIX_API_KEY');
-    const nutritionixAppId = 'fe83c2a4'; // Nutritionix requires both App ID and API Key
+    const nutritionixAppId = Deno.env.get('NUTRITIONIX_APP_ID'); // set this to your Nutritionix Application ID (e.g. 4557aa6b)
 
-    if (!nutritionixApiKey) {
-      console.error('NUTRITIONIX_API_KEY is not configured');
+    const missingVars = [];
+    if (!nutritionixAppId) missingVars.push('NUTRITIONIX_APP_ID');
+    if (!nutritionixApiKey) missingVars.push('NUTRITIONIX_API_KEY');
+    if (missingVars.length) {
+      console.error('Missing Nutritionix environment variables:', missingVars.join(', '));
       return new Response(
-        JSON.stringify({ error: 'API key not configured' }),
+        JSON.stringify({ error: 'Nutritionix credentials not configured', missing: missingVars }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -37,6 +42,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
         'x-app-id': nutritionixAppId,
         'x-app-key': nutritionixApiKey,
+        'User-Agent': 'calorie-tracker/1.0 (supabase function)'
       },
       body: JSON.stringify({ query }),
     });
