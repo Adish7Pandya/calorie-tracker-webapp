@@ -1,1 +1,7 @@
 project_id = "seituwomfhhzyxpzqnjl"
+
+[functions.search-nutrition]
+verify_jwt = false
+
+[functions.ai-suggest-meals]
+verify_jwt = false
