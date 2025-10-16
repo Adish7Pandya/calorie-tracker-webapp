@@ -22,22 +22,23 @@
 > - 7-Day trend chart with data visualization
 > - Add meal dialog with nutrition search
 > - AI suggestions dialog
+ Screenshot(s) of the app UI. If you'd like the image embedded in the repository, place the dashboard image at `assets/screenshot-dashboard.png`.
 
-### Landing Page
-*Beautiful, modern landing page with gradient design and clear call-to-action*
+ <div align="center">
 
-### Dashboard
-*Comprehensive dashboard showing daily calories, remaining budget, and meal count*
+ ![CaloriTrack Dashboard](assets/screenshot-dashboard.png)
 
-### 7-Day Trend Chart
-*Interactive line chart displaying your calorie consumption over the past week*
+ <sub>Dashboard: daily calories, remaining budget, progress bar and 7-day trend chart.</sub>
 
-### Add Meal Dialog
-*Smart nutrition search powered by USDA FoodData Central*
+ </div>
 
-### AI Meal Suggestions
-*Get personalized meal recommendations based on your remaining calories*
+ If the image file is missing, you'll see a broken image icon on GitHub. Add the provided screenshot to `assets/screenshot-dashboard.png` and re-run the following to include it in the repo:
 
+ ```bash
+ git add assets/screenshot-dashboard.png
+ git commit -m "chore(docs): add dashboard screenshot"
+ git push origin main
+ ```
 ---
 
 ## ✨ Features
