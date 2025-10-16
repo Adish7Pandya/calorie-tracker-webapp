@@ -8,7 +8,18 @@ interface CalorieChartProps {
 }
 
 const CalorieChart = ({ userId }: CalorieChartProps) => {
-  const [chartData, setChartData] = useState<any[]>([]);
+  // Dummy data for demonstration
+  const dummyData = [
+    { date: 'Mon', calories: 1850 },
+    { date: 'Tue', calories: 2100 },
+    { date: 'Wed', calories: 1920 },
+    { date: 'Thu', calories: 2250 },
+    { date: 'Fri', calories: 1980 },
+    { date: 'Sat', calories: 2350 },
+    { date: 'Sun', calories: 1750 },
+  ];
+
+  const [chartData, setChartData] = useState<any[]>(dummyData);
 
   useEffect(() => {
     if (userId) {
@@ -57,7 +68,8 @@ const CalorieChart = ({ userId }: CalorieChartProps) => {
       });
     }
 
-    setChartData(chartArray);
+    // If no data, keep dummy data; otherwise use real data
+    setChartData(chartArray.length > 0 && chartArray.some(d => d.calories > 0) ? chartArray : dummyData);
   };
 
   return (

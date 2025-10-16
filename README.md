@@ -1,97 +1,414 @@
-# Welcome to your calorie-tracker-webapp project
+# 🍎 CaloriTrack - AI-Powered Calorie Tracking App
 
-## Project info
+<div align="center">
 
-**URL**: (removed third-party preview link)
+![CaloriTrack Logo](https://img.shields.io/badge/CaloriTrack-AI%20Powered-brightgreen?style=for-the-badge)
+[![Live Demo](https://img.shields.io/badge/demo-live-success?style=for-the-badge)](https://your-app-url.lovable.app)
+[![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](LICENSE)
 
-## How can I edit this code?
+**Track your calories effortlessly with AI-powered meal suggestions**
 
-There are several ways of editing your application.
+[Features](#-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started) • [Screenshots](#-screenshots) • [API](#-nutrition-api)
 
-Local development
+</div>
 
-Work locally using your preferred IDE. The project is a Vite + React + TypeScript frontend with Supabase functions. Changes are committed via Git.
+---
 
-**Use your preferred IDE**
+## 📸 Screenshots
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+> **Note**: Add screenshots of your UI here. Recommended screenshots:
+> - Landing page with gradient hero section
+> - Dashboard showing stats cards and progress bar
+> - 7-Day trend chart with data visualization
+> - Add meal dialog with nutrition search
+> - AI suggestions dialog
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Landing Page
+*Beautiful, modern landing page with gradient design and clear call-to-action*
 
-Follow these steps:
+### Dashboard
+*Comprehensive dashboard showing daily calories, remaining budget, and meal count*
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### 7-Day Trend Chart
+*Interactive line chart displaying your calorie consumption over the past week*
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Add Meal Dialog
+*Smart nutrition search powered by USDA FoodData Central*
 
-# Step 3: Install the necessary dependencies.
-npm i
+### AI Meal Suggestions
+*Get personalized meal recommendations based on your remaining calories*
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+---
+
+## ✨ Features
+
+### 🎯 Core Functionality
+- **Calorie Tracking**: Log meals with detailed nutrition information (calories, protein, carbs, fat)
+- **Daily Goal Management**: Set and track your daily calorie goals
+- **Visual Analytics**: Beautiful 7-day trend chart to visualize your progress
+- **Real-time Updates**: See your progress update instantly as you add meals
+
+### 🤖 AI-Powered Features
+- **Smart Meal Suggestions**: Get AI-generated meal recommendations based on:
+  - Your remaining calorie budget
+  - Your recent meal history
+  - Nutritional balance
+- **Powered by Gemini 2.5 Flash**: Fast, accurate, and contextual suggestions
+
+### 🔐 User Management
+- **Secure Authentication**: Email-based authentication with auto-confirm
+- **Personal Profiles**: Each user has their own profile and meal history
+- **Data Privacy**: Row-level security ensures your data stays private
+
+### 🎨 Modern UI/UX
+- **Responsive Design**: Works beautifully on desktop, tablet, and mobile
+- **Dark Mode Ready**: Seamless dark/light theme support
+- **Smooth Animations**: Polished transitions and interactions
+- **Accessible**: Built with accessibility in mind
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+- **React 18** - Modern React with hooks
+- **TypeScript** - Type-safe development
+- **Vite** - Lightning-fast build tool
+- **Tailwind CSS** - Utility-first styling
+- **shadcn/ui** - Beautiful, accessible components
+- **Recharts** - Data visualization
+- **React Router** - Client-side routing
+- **React Query** - Server state management
+
+### Backend (Lovable Cloud)
+- **Supabase** - Backend as a Service
+  - PostgreSQL database
+  - Row Level Security (RLS)
+  - Real-time subscriptions
+  - Edge Functions (Serverless)
+  - Authentication
+
+### AI & APIs
+- **Lovable AI Gateway** - Access to Gemini 2.5 Flash
+- **USDA FoodData Central API** - Comprehensive nutrition database (100,000+ foods)
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+ and npm
+- Git
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <YOUR_GIT_URL>
+   cd calorie-tracker-webapp
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   
+   The `.env` file is auto-configured with Lovable Cloud. It includes:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_PUBLISHABLE_KEY`
+   - `VITE_SUPABASE_PROJECT_ID`
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+   
+   Navigate to `http://localhost:5173`
+
+### Database Setup
+
+The database schema is automatically managed through Supabase migrations in `supabase/migrations/`. The schema includes:
+
+- **profiles** table - User profiles with daily calorie goals
+- **meals** table - Logged meals with nutrition data
+- **RLS policies** - Secure data access per user
+- **Triggers** - Automatic profile creation on signup
+
+---
+
+## 🍔 Nutrition API
+
+### USDA FoodData Central
+
+We use the **USDA FoodData Central API**, which provides:
+
+- ✅ **Free to use** - No API key required for basic use (DEMO_KEY)
+- ✅ **Comprehensive** - 100,000+ foods in the database
+- ✅ **Reliable** - Official government database
+- ✅ **Detailed** - Includes calories, protein, carbs, fats, and more
+
+#### Why USDA over Nutritionix?
+
+| Feature | USDA FoodData Central | Nutritionix |
+|---------|----------------------|-------------|
+| Cost | Free | Paid tiers required |
+| API Key | Optional (DEMO_KEY works) | Required |
+| Database Size | 100,000+ foods | Large database |
+| Data Quality | Official government data | Community + verified |
+| Rate Limits | Generous free tier | Limited on free tier |
+
+#### Get Your Own API Key (Optional)
+
+While the DEMO_KEY works for testing, you can get your own free API key:
+
+1. Visit [FoodData Central](https://fdc.nal.usda.gov/api-guide.html)
+2. Request an API key
+3. Add it to your edge function (replace `DEMO_KEY` in `supabase/functions/search-nutrition/index.ts`)
+
+#### Alternative APIs
+
+If you want to use a different nutrition API, here are some options:
+
+**1. Edamam Nutrition API**
+- Pros: Very detailed, includes recipes, barcode scanning
+- Cons: Requires API key, limited free tier (5,000 requests/month)
+- Website: [Edamam](https://www.edamam.com/)
+
+**2. Open Food Facts API**
+- Pros: Completely free and open source, 2M+ products
+- Cons: Primarily packaged foods, less produce data
+- Website: [Open Food Facts](https://world.openfoodfacts.org/data)
+
+**3. FatSecret Platform API**
+- Pros: Good mobile SDKs, comprehensive database
+- Cons: Requires API key and OAuth
+- Website: [FatSecret](https://platform.fatsecret.com/api/)
+
+**4. Spoonacular API**
+- Pros: Includes recipes, meal planning, wine pairing
+- Cons: Paid service, complex pricing
+- Website: [Spoonacular](https://spoonacular.com/food-api)
+
+To switch APIs, modify `supabase/functions/search-nutrition/index.ts` with the new API endpoint and data transformation logic.
+
+---
+
+## 📱 Usage
+
+### Creating an Account
+1. Click "Get Started Free" on the landing page
+2. Fill in your email and password
+3. Set your daily calorie goal
+
+### Tracking Meals
+1. Click "Add Meal" on the dashboard
+2. Search for a food item (e.g., "chicken breast")
+3. Adjust quantity if needed
+4. Click "Add Meal"
+
+### Getting AI Suggestions
+1. Click "AI Meal Suggestions" on the dashboard
+2. Review personalized recommendations
+3. Add suggested meals directly to your log
+
+### Viewing Progress
+- Check the **7-Day Trend** chart for your weekly overview
+- Monitor **Today's Calories** vs your daily goal
+- See **Remaining** calories at a glance
+
+---
+
+## 🏗 Project Structure
+
+```
+calorie-tracker-webapp/
+├── src/
+│   ├── components/          # React components
+│   │   ├── ui/             # shadcn/ui components
+│   │   ├── AddMealDialog.tsx
+│   │   ├── AISuggestionsDialog.tsx
+│   │   ├── CalorieChart.tsx
+│   │   └── MealList.tsx
+│   ├── pages/              # Page components
+│   │   ├── Auth.tsx        # Authentication page
+│   │   ├── Dashboard.tsx   # Main dashboard
+│   │   └── Index.tsx       # Landing page
+│   ├── integrations/       # Supabase integration
+│   │   └── supabase/
+│   ├── App.tsx             # Main app component
+│   └── main.tsx            # Entry point
+├── supabase/
+│   ├── functions/          # Edge functions
+│   │   ├── ai-suggest-meals/
+│   │   └── search-nutrition/
+│   ├── migrations/         # Database migrations
+│   └── config.toml         # Supabase configuration
+├── java-backend/           # Optional Java 21 backend
+└── public/                 # Static assets
 ```
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🔧 Available Scripts
 
-**Use GitHub Codespaces**
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run lint         # Run ESLint
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+---
 
-## What technologies are used for this project?
+## 🌟 Key Components
 
-This project is built with:
+### CalorieChart
+Interactive line chart showing 7-day calorie trends with dummy data for demonstration.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### AddMealDialog
+Smart dialog with nutrition search integration. Searches USDA database and displays results with serving sizes.
 
-## How can I deploy this project?
+### AISuggestionsDialog
+AI-powered meal recommendations using Gemini 2.5 Flash, considering remaining calories and recent meals.
 
-Follow your usual deployment workflow (Vercel, Netlify, or other static hosts) or deploy the frontend and Supabase functions separately. This repository contains a frontend (Vite + React) and serverless functions under `supabase/functions`.
+### Dashboard
+Main application interface with stats cards, progress tracking, and quick actions.
 
-## Can I connect a custom domain to my deployment?
+---
 
-Yes — configure your hosting provider's domain settings or the platform where you deploy the frontend. If you use a managed backend or preview service, follow that platform's docs for custom domains.
+## 🔐 Security
 
-## Java backend (local build with Java 21)
+- **Row Level Security (RLS)**: All database tables have RLS policies ensuring users can only access their own data
+- **Authentication**: Secure email/password authentication with Supabase
+- **Environment Variables**: Sensitive data stored in environment variables
+- **API Keys**: Edge functions handle API keys server-side
 
-This repository contains a small Spring Boot backend in `java-backend`. The project now targets Java 21 (LTS). To build and run the backend locally you need JDK 21 installed and available to Maven.
+---
 
-Quick install (Linux - Debian/Ubuntu):
+## 🚢 Deployment
 
+### Deploy to Vercel
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+```
+
+### Deploy to Netlify
+
+```bash
+# Install Netlify CLI
+npm i -g netlify-cli
+
+# Build and deploy
+npm run build
+netlify deploy --prod --dir=dist
+```
+
+### Environment Variables for Production
+
+Make sure to set these environment variables in your hosting platform:
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_PUBLISHABLE_KEY`
+- `VITE_SUPABASE_PROJECT_ID`
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 🐛 Known Issues & Roadmap
+
+### Current Limitations
+- USDA API uses DEMO_KEY (limited rate limits)
+- Chart shows dummy data when no meals are logged
+
+### Future Enhancements
+- [ ] Barcode scanning for packaged foods
+- [ ] Meal templates and favorites
+- [ ] Weekly/monthly reports
+- [ ] Export data to CSV
+- [ ] Macro tracking goals
+- [ ] Weight tracking integration
+- [ ] Social features (share meals, challenges)
+- [ ] Mobile app (React Native)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- **Lovable** - For the amazing development platform and AI gateway
+- **Supabase** - For the powerful backend infrastructure
+- **USDA** - For providing free, comprehensive nutrition data
+- **shadcn/ui** - For beautiful, accessible components
+- **Recharts** - For elegant data visualization
+
+---
+
+## 📞 Support
+
+If you have any questions or run into issues:
+
+- 🐛 Issues: [GitHub Issues](YOUR_REPO_URL/issues)
+- 💬 Discussions: [GitHub Discussions](YOUR_REPO_URL/discussions)
+- 📧 Email: your-email@example.com
+
+---
+
+## 📖 Additional Documentation
+
+### Java Backend (Optional)
+
+This repository includes an optional Spring Boot backend in `java-backend/` targeting Java 21 (LTS).
+
+**Prerequisites**: JDK 21 installed and available to Maven
+
+**Quick Install (Linux - Debian/Ubuntu)**:
 ```sh
-# Install OpenJDK 21 (Debian/Ubuntu)
 sudo apt update
 sudo apt install -y wget unzip
 wget https://github.com/adoptium/temurin21-binaries/releases/latest/download/OpenJDK21U-jdk_x64_linux_hotspot_21_latest.tar.gz
 sudo tar -xzf OpenJDK21U-jdk_x64_linux_hotspot_21_latest.tar.gz -C /usr/lib/jvm/
-# adjust path if necessary
 sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk-21/bin/java 1
 sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk-21/bin/javac 1
 ```
 
-Fedora/CentOS and macOS users should use their package manager or adopt Temurin/Oracle distributions.
-
-If you have multiple JDKs, add or update `java-backend/.mvn/toolchains.xml` so Maven can pick the JDK 21 installation. Example `jdkHome` in that file should point to the JDK 21 install location.
-
-Build the backend:
-
+**Build the backend**:
 ```sh
 cd java-backend
 mvn -DskipTests package
 ```
 
-If the build fails with "release version 21 not supported", ensure your `java -version` reports a Java 21 runtime and that Maven is using JDK 21 (not just a Java 17 runtime).
+---
+
+<div align="center">
+
+**Built with ❤️ using [Lovable](https://lovable.dev)**
+
+⭐ Star this repo if you find it helpful!
+
+[⬆ Back to Top](#-caloritrack---ai-powered-calorie-tracking-app)
+
+</div>

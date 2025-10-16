@@ -20,30 +20,19 @@ serve(async (req) => {
       );
     }
 
-    const nutritionixApiKey = Deno.env.get('NUTRITIONIX_API_KEY');
-    const nutritionixAppId = 'fe83c2a4'; // Nutritionix requires both App ID and API Key
+    // Using USDA FoodData Central API (free, no API key required for basic use)
+    const searchUrl = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(query)}&pageSize=5&api_key=DEMO_KEY`;
 
-    if (!nutritionixApiKey) {
-      console.error('NUTRITIONIX_API_KEY is not configured');
-      return new Response(
-        JSON.stringify({ error: 'API key not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    const response = await fetch('https://trackapi.nutritionix.com/v2/natural/nutrients', {
-      method: 'POST',
+    const response = await fetch(searchUrl, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'x-app-id': nutritionixAppId,
-        'x-app-key': nutritionixApiKey,
       },
-      body: JSON.stringify({ query }),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Nutritionix API error:', response.status, errorText);
+      console.error('USDA API error:', response.status, errorText);
       return new Response(
         JSON.stringify({ error: 'Failed to fetch nutrition data' }),
         { status: response.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -52,16 +41,23 @@ serve(async (req) => {
 
     const data = await response.json();
     
-    // Transform Nutritionix response to our format
-    const foods = data.foods.map((food: any) => ({
-      name: food.food_name,
-      serving_qty: food.serving_qty,
-      serving_unit: food.serving_unit,
-      calories: Math.round(food.nf_calories),
-      protein: Math.round(food.nf_protein),
-      carbs: Math.round(food.nf_total_carbohydrate),
-      fat: Math.round(food.nf_total_fat),
-    }));
+    // Transform USDA response to our format
+    const foods = (data.foods || []).slice(0, 5).map((food: any) => {
+      const getNutrient = (nutrientId: number) => {
+        const nutrient = food.foodNutrients?.find((n: any) => n.nutrientId === nutrientId);
+        return nutrient ? Math.round(nutrient.value) : 0;
+      };
+
+      return {
+        name: food.description.toLowerCase(),
+        serving_qty: 100,
+        serving_unit: 'g',
+        calories: getNutrient(1008), // Energy (kcal)
+        protein: getNutrient(1003),  // Protein
+        carbs: getNutrient(1005),    // Carbohydrates
+        fat: getNutrient(1004),      // Total Fat
+      };
+    });
 
     return new Response(
       JSON.stringify({ foods }),
