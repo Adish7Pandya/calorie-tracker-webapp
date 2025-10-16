@@ -2,4 +2,8 @@
 *.jsx linguist-language=JavaScript
 *.java linguist-language=Java
 *.ts linguist-language=JavaScript
-*.tsx linguist-language=Java 
+*.tsx linguist-language=JavaScript
+
+# Treat the Java backend as vendored so it is excluded from language statistics
+java-backend/** linguist-vendored
+*.tsx linguist-language=JavaScript
