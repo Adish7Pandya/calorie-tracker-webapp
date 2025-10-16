@@ -82,7 +82,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      seed_demo_meals: {
+        Args: { user_id_param: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

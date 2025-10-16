@@ -6,13 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
-import { Apple, Plus, TrendingUp, LogOut, Sparkles, Settings, Database } from "lucide-react";
+import { Apple, Plus, TrendingUp, LogOut, Sparkles, Settings } from "lucide-react";
 import AddMealDialog from "@/components/AddMealDialog";
 import MealList from "@/components/MealList";
 import CalorieChart from "@/components/CalorieChart";
 import AISuggestionsDialog from "@/components/AISuggestionsDialog";
 import SettingsDialog from "@/components/SettingsDialog";
-import SeedDataDialog from "@/components/SeedDataDialog";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -23,7 +22,6 @@ const Dashboard = () => {
   const [showAddMeal, setShowAddMeal] = useState(false);
   const [showAISuggestions, setShowAISuggestions] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [showSeedData, setShowSeedData] = useState(false);
 
   useEffect(() => {
     checkUser();
@@ -103,12 +101,6 @@ const Dashboard = () => {
   const handleSettingsUpdate = () => {
     if (user) {
       loadProfile(user.id);
-    }
-  };
-
-  const handleSeedDataComplete = () => {
-    if (user) {
-      loadMeals(user.id);
     }
   };
 
@@ -233,15 +225,6 @@ const Dashboard = () => {
             <Sparkles className="w-5 h-5 mr-2" />
             AI Meal Suggestions
           </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            onClick={() => setShowSeedData(true)}
-            className="flex-1 min-w-[200px]"
-          >
-            <Database className="w-5 h-5 mr-2" />
-            Add Demo Data
-          </Button>
         </div>
 
         {/* Chart and Meals */}
@@ -273,13 +256,6 @@ const Dashboard = () => {
         currentGoal={dailyGoal}
         currentName={profile?.full_name || ""}
         onUpdate={handleSettingsUpdate}
-      />
-
-      <SeedDataDialog
-        open={showSeedData}
-        onOpenChange={setShowSeedData}
-        userId={user?.id || ""}
-        onComplete={handleSeedDataComplete}
       />
     </div>
   );
