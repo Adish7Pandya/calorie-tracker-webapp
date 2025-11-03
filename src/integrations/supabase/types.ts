@@ -20,11 +20,11 @@ export type Database = {
           carbs: number | null
           created_at: string
           fat: number | null
-          food_name: string
           id: string
-          meal_date: string
+          meal_time: string
+          name: string
           protein: number | null
-          quantity: number
+          updated_at: string
           user_id: string
         }
         Insert: {
@@ -32,11 +32,11 @@ export type Database = {
           carbs?: number | null
           created_at?: string
           fat?: number | null
-          food_name: string
           id?: string
-          meal_date?: string
+          meal_time?: string
+          name: string
           protein?: number | null
-          quantity?: number
+          updated_at?: string
           user_id: string
         }
         Update: {
@@ -44,11 +44,11 @@ export type Database = {
           carbs?: number | null
           created_at?: string
           fat?: number | null
-          food_name?: string
           id?: string
-          meal_date?: string
+          meal_time?: string
+          name?: string
           protein?: number | null
-          quantity?: number
+          updated_at?: string
           user_id?: string
         }
         Relationships: []
@@ -82,10 +82,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      seed_demo_meals: {
-        Args: { user_id_param: string }
-        Returns: undefined
-      }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never

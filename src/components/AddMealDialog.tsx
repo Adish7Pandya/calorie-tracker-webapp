@@ -58,8 +58,7 @@ const AddMealDialog = ({ open, onOpenChange, onMealAdded, userId }: AddMealDialo
     try {
       const { error } = await supabase.from("meals").insert({
         user_id: userId,
-        food_name: food.name,
-        quantity: food.serving_qty,
+        name: food.name,
         calories: food.calories,
         protein: food.protein,
         carbs: food.carbs,
@@ -86,8 +85,7 @@ const AddMealDialog = ({ open, onOpenChange, onMealAdded, userId }: AddMealDialo
     try {
       const { error } = await supabase.from("meals").insert({
         user_id: userId,
-        food_name: manualEntry.food_name,
-        quantity: Number(manualEntry.quantity),
+        name: manualEntry.food_name,
         calories: Number(manualEntry.calories),
         protein: Number(manualEntry.protein),
         carbs: Number(manualEntry.carbs),

@@ -76,7 +76,8 @@ const Dashboard = () => {
       .from("meals")
       .select("*")
       .eq("user_id", userId)
-      .eq("meal_date", today)
+      .gte("meal_time", `${today}T00:00:00`)
+      .lte("meal_time", `${today}T23:59:59`)
       .order("created_at", { ascending: false });
 
     if (error) {
