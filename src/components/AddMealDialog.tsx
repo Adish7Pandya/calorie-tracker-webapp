@@ -56,14 +56,14 @@ const AddMealDialog = ({ open, onOpenChange, onMealAdded, userId }: AddMealDialo
   const handleAddFromSearch = async (food: any) => {
     setAdding(true);
     try {
-      const { error } = await supabase.from("meals").insert({
+      const { error } = await supabase.from("meals").insert([{
         user_id: userId,
-        name: food.name,
+        food_name: food.name,
         calories: food.calories,
-        protein: food.protein,
-        carbs: food.carbs,
-        fat: food.fat,
-      });
+        protein: food.protein || 0,
+        carbs: food.carbs || 0,
+        fat: food.fat || 0,
+      }] as any);
 
       if (error) throw error;
 
@@ -83,14 +83,14 @@ const AddMealDialog = ({ open, onOpenChange, onMealAdded, userId }: AddMealDialo
     setAdding(true);
 
     try {
-      const { error } = await supabase.from("meals").insert({
+      const { error } = await supabase.from("meals").insert([{
         user_id: userId,
-        name: manualEntry.food_name,
+        food_name: manualEntry.food_name,
         calories: Number(manualEntry.calories),
         protein: Number(manualEntry.protein),
         carbs: Number(manualEntry.carbs),
         fat: Number(manualEntry.fat),
-      });
+      }] as any);
 
       if (error) throw error;
 

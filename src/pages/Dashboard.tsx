@@ -72,12 +72,12 @@ const Dashboard = () => {
 
   const loadMeals = async (userId: string) => {
     const today = new Date().toISOString().split('T')[0];
+    // @ts-ignore - Type mismatch between DB schema and generated types
     const { data, error } = await supabase
       .from("meals")
       .select("*")
       .eq("user_id", userId)
-      .gte("meal_time", `${today}T00:00:00`)
-      .lte("meal_time", `${today}T23:59:59`)
+      .eq("meal_date", today)
       .order("created_at", { ascending: false });
 
     if (error) {
